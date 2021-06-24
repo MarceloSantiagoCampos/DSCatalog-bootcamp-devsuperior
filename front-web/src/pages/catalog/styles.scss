@@ -14,7 +14,9 @@
 }
 
 .catalog-prducts {
-
     margin-top: 43px;
-
+    display: grid;
+    grid-template-columns: repeat(auto-fill, 250px);
+    gap: 33px 20px;
+    justify-content: space-between;
 }
