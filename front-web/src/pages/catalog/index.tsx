@@ -1,8 +1,21 @@
 import './styles.scss';
 import ProductCard from './components/ProductCard/index';
 import { Link } from 'react-router-dom';
+import { useEffect } from 'react';
 
 const Catalog = () => {
+    //quando o componente iniciar buscar a lista de produto
+
+
+    //quando a lista de produtos estiver disponpível popular um estado no componente e listar os produtos dinamicamente
+
+    useEffect(()=>{
+        fetch('http://localhost:3000/products')
+            .then(Response => Response.json())
+            .then(response => console.log(response))
+        ;
+    }, []);
+
     return(
         <div className="catalog-container">
             <h1 className="catalog-title">
