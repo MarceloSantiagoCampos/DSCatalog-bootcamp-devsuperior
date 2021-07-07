@@ -2,16 +2,22 @@ import './styles.scss';
 import ProductCard from './components/ProductCard/index';
 import { Link } from 'react-router-dom';
 import { useEffect } from 'react';
+import { makeRequest } from '../../core/utils/request';
 
 const Catalog = () => {
-    //quando o componente iniciar buscar a lista de produto
+    
 
 
     //quando a lista de produtos estiver disponpível popular um estado no componente e listar os produtos dinamicamente
 
+    //quando o componente iniciar buscar a lista de produto
     useEffect(()=>{
-        fetch('http://localhost:3000/products')
-            .then(Response => Response.json())
+        const params = {
+            page: 0,
+            linesPerPage: 12
+        }
+        
+        makeRequest({ url:'/products', params  })
             .then(response => console.log(response))
         ;
     }, []);
