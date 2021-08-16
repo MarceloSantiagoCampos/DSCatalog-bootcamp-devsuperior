@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { makeRequest } from '../../core/utils/request';
 import { ProductsResponse } from '../../core/types/Product';
-import ProductCardLoader from './components/ProductCardLoader';
+import ProductCardLoader from './components/Loaders/ProductCardLoader';
 
 const Catalog = () => {
     //quando a lista de produtos estiver disponpível popular um estado no componente e listar os produtos dinamicamente
