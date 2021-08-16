@@ -4,12 +4,13 @@ import { Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { makeRequest } from '../../core/utils/request';
 import { ProductsResponse } from '../../core/types/Product';
+import ProductCardLoader from './components/ProductCardLoader';
 
 const Catalog = () => {
     //quando a lista de produtos estiver disponpível popular um estado no componente e listar os produtos dinamicamente
     const [productsResponse, setProductsResponse] = useState<ProductsResponse>();
-
-    console.log(productsResponse);
+    const [isLoading, setIsLoading] = useState(false);
+    
 
     //quando o componente iniciar buscar a lista de produto
     useEffect(()=>{
@@ -17,10 +18,16 @@ const Catalog = () => {
             page: 0,
             linesPerPage: 12
         }
-        
+
+        //iniciar o loader
+        setIsLoading(true);
         makeRequest({ url:'/products', params  })
-            .then(response => setProductsResponse(response.data));
-    }, []);
+            .then(response => setProductsResponse(response.data))
+            .finally(() => {
+                //finalizar o loader
+                setIsLoading(false);
+            })        
+     }, []);
 
     return(
         <div className="catalog-container">
@@ -28,11 +35,13 @@ const Catalog = () => {
                 Catalogo de produtos
             </h1>
             <div className="catalog-prducts">
-                {productsResponse?.content.map(product => (
-                    <Link to={`/products/${product.id}`} key={product.id}>
-                        <ProductCard product={product} />
-                    </Link>
-                ))}
+                {isLoading ? <ProductCardLoader /> : (
+                    productsResponse?.content.map(product => (
+                        <Link to={`/products/${product.id}`} key={product.id}>
+                            <ProductCard product={product} />
+                        </Link>
+                    ))
+                )}      
             </div>
         </div>
     )
